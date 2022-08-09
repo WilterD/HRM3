@@ -1,71 +1,36 @@
-const url = 'http://localhost:3000/workers';
-const url2 = 'http://localhost:3000/users';
+const url = "http://localhost:3000/workers"; // datos de trabajadores, acceder con token
+const url2 = "http://localhost:3000/users"; // usuarios, acceso y token
+// const url3 = "http://localhost:3000/users/signin"; // registrar usuario, espera id_user,email,password
 
-// let cedula= "28.215.217";
-// let clave= "1234";
+const cargarApi = async () => {
+  // const respuestaTrabajadores = await fetch(`${url}`); // guardar respuesta en variable de datos de API
+  // const miToken = token.respuestaTrabajadores.json();
+  // console.log(miToken);
+  // console.log(respuestaTrabajadores);
+  // const trabajadores = await respuestaTrabajadores.json(); // guardar respuesta en variable de datos de API
+  // const respuestaClientes = await fetch(`${url2}`+`/login/`+`${cedula}`+`/`+`${clave}`); // guardar respuesta en variable de datos de API
 
-// $('#enviar').click(function(){
-    
-//     cedula = $('#cedula').val();
-//     clave = $('#clave').val();
-//     cargarApi();
+  const respuestaUsers = await fetch("http://localhost:3000/users/login/27.922.357/1234"); // guardar respuesta en variable de datos de API
+  const acessoUser = await respuestaUsers.json(); // guardar si el acceso es true
+  const miToken = acessoUser.token;
 
-//     $.ajax({
-//         url: `${url}`,
-//         type: 'POST',
-//         data: {
-//             cedula: cedula,
-//             clave: clave
-//         },
-//         success: function(data){
-//             console.log("todo excelente");
-//         }
+  if (acessoUser.acceso) {
+    // si el usuario esta registrado, entonces se le permite ingresar al sistema
+    localStorage.setItem("token", miToken); // guardar el token en el localStorage
+    // window.location.href = './index.html';
+    console.log("accedemos al sistema");
+  } else {
+    console.log("no accedemos al sistema");
+  }
 
-// })
-// });
+  if (respuestaUsers.status == 200) {
+    console.log("buena conexion con la api Users");    
+  }
+};
+const usuario = {
+    id_user: "12345678",
+    email: "correo@gmail.com",
+    password_user: "1234",
+  };
 
-console.log(cedula);
-console.log(clave);
-
-export const nuevoCliente = async() => {
-
-    try{
-       await fetch(`${url}`, {
-            method: 'POST',
-            body: JSON.stringify(cliente),
-            headers:{
-                'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-            window.location.href = './index.html';
-            console.log("hola loogin");
-            
-    }catch(error){
-        console.log(error);
-    }
-}
-
-
-const cargarApi= async() => {
-    const respuestaTrabajadores = await fetch(`${url}`); // guardar respuesta en variable de datos de API
-
-    const trabajadores = await respuestaTrabajadores.json(); // guardar respuesta en variable de datos de API
-    // const respuestaClientes = await fetch(`${url2}`+`/login/`+`${cedula}`+`/`+`${clave}`); // guardar respuesta en variable de datos de API
-      
-    // const respuesta2 = await fetch('http://localhost:3000/users/login/28.215.217/1234'); // guardar respuesta en variable de datos de API
-    try{
-            if(respuestaTrabajadores.status==200){
-               const datos = await respuesta1.json(); // convierte la respuesta a json
-                console.log(datos);
-                
-               cantidadEmpleados = datos.length;
-               totalEmpleados = document.getElementById('totalEmpleados'); // total de empleados
-               totalEmpleados.innerText = cantidadEmpleados; // remplazar el texto del elemento totalEmpleados     
-}
-    }catch(error){
-            console.log(error);
-        }
-    }
-
-    cargarApi();
-    
+// await nuevoCliente(usuario);
