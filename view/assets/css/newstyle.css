@@ -1,0 +1,16 @@
+.main-content{
+    margin-left: 0px!important;
+}
+
+.logo-lg{
+    margin-top: 15px;
+    margin-left:10px;
+}
+
+.footer{
+    position:static;
+}
+
+.nav-link{
+    position:fixed;
+}
